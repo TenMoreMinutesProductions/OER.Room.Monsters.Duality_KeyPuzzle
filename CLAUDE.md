@@ -12,6 +12,26 @@ This is an ESP32-S3 template project using PlatformIO with the Arduino framework
 
 **IDE:** JetBrains CLion with PlatformIO plugin
 
+## Claude Code Tool Path Conventions (CRITICAL)
+
+Most users of this repository are on **Windows with Git Bash**. There are **two different path conventions** you must use depending on context:
+
+### Tool Calls (Read, Edit, Write, Glob, Grep, etc.)
+
+When calling Claude Code tools that accept file paths, you MUST use **Windows-style paths**:
+
+- ✅ Use backslashes: `c:\Projects\REDACTED\app\src\main.ts`
+- ✅ Use the full absolute path with drive letter
+- ❌ Do NOT use forward slashes: `c:/Projects/REDACTED/app/src/main.ts`
+- ❌ Do NOT use Unix-style paths: `/c/Projects/REDACTED/app/src/main.ts`
+
+### Bash Commands
+
+When running commands via the Bash tool, you MUST use **Unix-style paths** (Git Bash convention):
+
+- ✅ Use forward slashes: `/c/Projects/REDACTED/app/src/main.ts`
+- ❌ Do NOT use backslashes in bash commands
+
 ## Build Commands
 
 ```bash
@@ -101,7 +121,9 @@ All event handlers are in `callbacks.cpp`:
 
 ## ESP32-S3 Notes
 
-- Different GPIO numbering than original ESP32—verify pin mappings
+- Different GPIO numbering than original ESP32—see `config.h` for detailed pin notes
+- GPIO 33-34 do not exist on ESP32-S3; GPIO 35-37 reserved for PSRAM on N8R2
+- GPIO 38-42, 47 are available for general use
 - PSRAM enabled via build flags; use `ps_malloc()` for PSRAM allocations
 - No DAC pins—use I2S or external DAC for audio
 - Native USB support available
